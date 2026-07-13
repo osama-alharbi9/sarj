@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node caller2.mjs)"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: theme("colors.page");
+    color: theme("colors.ink.DEFAULT");
+    font-family: var(--font-plex-ar), var(--font-plex), sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Under English the Latin cut leads; the Arabic face stays loaded as the
+     fallback, because plates, documents and transcripts remain Arabic. */
+  html[lang="en"] body {
+    font-family: var(--font-plex), var(--font-plex-ar), sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cbd8d1;
+    border-radius: 8px;
+  }
+
+  /* Latin runs (refs, plates, clocks, durations) stay LTR inside the RTL shell. */
+  [dir="ltr"] {
+    unicode-bidi: isolate;
+  }
+}
+
+@layer utilities {
+  /* Completeness + OCR meters grow from the right in RTL. */
+  .meter-fill {
+    transform-origin: right;
+    animation: meterGrow 0.9s ease both;
+  }
+}
