@@ -46,11 +46,18 @@ const TITLES: Record<Locale, string> = {
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
 
-  // Restore the presenter's choice. SSR always renders English, so a saved
-  // Arabic preference settles on the first client paint.
+  /**
+   * English is the primary language, and the app ALWAYS opens in it.
+   *
+   * The choice is deliberately not persisted. This is a demo that gets opened
+   * cold on a projector: a presenter who previewed Arabic last week should not
+   * find an Arabic app in front of a room expecting English. Arabic is a switch
+   * you throw during the demo, not a preference that follows you around.
+   *
+   * Clears the key older builds wrote, so nobody is stuck with a stale one.
+   */
   useEffect(() => {
-    const saved = window.localStorage.getItem(KEY);
-    if (saved === "ar" || saved === "en") setLocaleState(saved);
+    window.localStorage.removeItem(KEY);
   }, []);
 
   useEffect(() => {
@@ -74,10 +81,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     return () => obs.disconnect();
   }, [locale]);
 
-  const setLocale = useCallback((l: Locale) => {
-    setLocaleState(l);
-    window.localStorage.setItem(KEY, l);
-  }, []);
+  const setLocale = useCallback((l: Locale) => setLocaleState(l), []);
 
   const dir = locale === "ar" ? "rtl" : "ltr";
   const p = useCallback((v: L) => v[locale], [locale]);
