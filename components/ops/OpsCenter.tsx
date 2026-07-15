@@ -167,19 +167,6 @@ function Dashboard({ onOpen }: { onOpen: (r: string) => void }) {
         </div>
       ))}
 
-      {/* how the assistant is performing — measured, never a target */}
-      <div className="grid grid-cols-4 gap-[14px]">
-        {t.aiPerf.metrics.map((m) => (
-          <div key={m.label} className="rounded-card-lg border border-sarj-border bg-white p-[16px]">
-            <div className="text-[12px] text-ink-muted">{m.label}</div>
-            <div className="mt-[6px] text-[28px] font-bold leading-none text-sarj-deep">
-              {m.value}
-            </div>
-            <div className="mt-[8px] text-[11px] leading-[1.5] text-ink-faint">{m.note}</div>
-          </div>
-        ))}
-      </div>
-
       <div className="grid grid-cols-[1fr_360px] gap-[16px]">
         <div className="flex flex-col gap-[16px]">
           {/* live intake — a widget, not a workflow */}
