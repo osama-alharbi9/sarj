@@ -364,78 +364,20 @@ function Activity({ cases }: { cases: Case[] }) {
 
 /* ══ المحققون ═══════════════════════════════════════════════════════ */
 
-function Roster({ onOpen }: { onOpen: (r: string) => void }) {
+/**
+ * Investigator load. Routine assignment is automatic — supervisors intervene
+ * only through escalations and reassignments — so this seat is a monitoring
+ * view of who is free and who is drowning, not a manual-assignment queue.
+ */
+function Roster({ onOpen: _onOpen }: { onOpen: (r: string) => void }) {
   const { cases } = useCases();
   const t = useT();
-  const unassigned = cases.filter((c) => c.status === "ready");
 
   return (
     <div className="flex flex-col gap-[16px]">
-      {unassigned.length > 0 && (
-        <Card title={t.ops.unassignedTitle} count={unassigned.length}>
-          <div className="flex flex-col gap-[9px]">
-            {unassigned.map((c) => (
-              <UnassignedRow key={c.ref} c={c} onOpen={onOpen} />
-            ))}
-          </div>
-        </Card>
-      )}
-
       <Card title={t.ops.rosterTitle}>
         <RosterList cases={cases} />
       </Card>
-    </div>
-  );
-}
-
-function UnassignedRow({ c, onOpen }: { c: Case; onOpen: (r: string) => void }) {
-  const { assign, cases } = useCases();
-  const t = useT();
-  const { n } = useLocale();
-  const age = useAge();
-  const [pick, setPick] = useState(false);
-
-  return (
-    <div className="rounded-card border border-hair bg-[#F7FAF8] px-[14px] py-[12px]">
-      <div className="flex items-center justify-between">
-        <button onClick={() => onOpen(c.ref)} className="flex items-center gap-3">
-          <Latin className="text-[13px] font-bold text-ink">{c.ref}</Latin>
-          <LanguageBadge lang={c.lang} />
-          <span className="text-[11px] text-ink-muted">{age(c.ageMin)}</span>
-        </button>
-        <button
-          onClick={() => setPick((v) => !v)}
-          className="rounded-chip bg-najm-green px-[14px] py-[7px] text-[12px] font-semibold text-white transition-colors hover:bg-najm-deep"
-        >
-          {t.ops.assign}
-        </button>
-      </div>
-
-      {pick && (
-        <div className="mt-[10px] flex flex-wrap gap-[7px] border-t border-hair-inner pt-[10px]">
-          {INVESTIGATORS.filter((i) => !i.away).map((i) => {
-            const load = activeCountFor(cases, i.id);
-            const full = load >= i.capacity;
-            return (
-              <button
-                key={i.id}
-                disabled={full}
-                onClick={() => {
-                  assign(c.ref, i.id);
-                  setPick(false);
-                }}
-                className={`rounded-pill border px-[12px] py-[6px] text-[12px] font-semibold transition-colors ${
-                  full
-                    ? "cursor-not-allowed border-hair bg-[#F1F5F2] text-ink-faint-2"
-                    : "border-najm-border bg-najm-tint text-najm-green hover:bg-najm-border"
-                }`}
-              >
-                {t.people[i.id]} · {n(load)}/{n(i.capacity)}
-              </button>
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }
