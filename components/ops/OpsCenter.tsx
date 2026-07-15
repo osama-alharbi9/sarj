@@ -886,7 +886,7 @@ function Complaints() {
               <tr className="bg-[#F7FAF8]">
                 {[
                   t.complaints.ref,
-                  t.complaints.about,
+                  t.complaints.relatedCase,
                   t.complaints.type,
                   t.complaints.urgency,
                   t.complaints.confidence,
@@ -923,7 +923,7 @@ function Complaints() {
                         {c.aboutCase}
                       </Latin>
                     ) : (
-                      <span className="text-[12px] text-ink-faint-2">—</span>
+                      <span className="text-[12px] text-ink-faint-2">{t.complaints.standalone}</span>
                     )}
                   </td>
                   <td className="px-[16px] py-[13px] align-top">
