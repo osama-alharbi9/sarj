@@ -759,23 +759,24 @@ function Complaints() {
                     )}
                   </td>
                   <td className="px-[16px] py-[13px] align-top">
-                    {/* The caller self-picks a category on Najm's form and often picks
-                        wrong. Showing the override is the entire pitch of triage. */}
-                    {miscategorised(c) && (
-                      <div className="mb-[5px] flex items-center gap-[6px] text-[11px] text-ink-muted">
-                        <span>{t.complaints.picked}:</span>
-                        <span className="line-through">{t.complaints.types[c.pickedType]}</span>
-                      </div>
-                    )}
-                    <span className="inline-flex items-center gap-[6px] rounded-pill bg-sarj-tint px-[10px] py-[5px] text-[12px] font-bold text-sarj-hover">
-                      <span className="h-[6px] w-[6px] rounded-full bg-sarj-violet" />
-                      {t.complaints.types[c.type]}
-                    </span>
-                    {miscategorised(c) && (
-                      <div className="mt-[5px] text-[10px] font-semibold text-sarj-violet">
-                        {t.complaints.corrected}
-                      </div>
-                    )}
+                    {/* One glance = the final category. The violet pill already says
+                        "AI classified this." When the AI overrode the caller's own
+                        pick, that fact is a faint aside — the original is on hover,
+                        never in the scan. */}
+                    <div className="flex items-center gap-[7px]">
+                      <span className="inline-flex items-center gap-[6px] rounded-pill bg-sarj-tint px-[10px] py-[5px] text-[12px] font-bold text-sarj-hover">
+                        <span className="h-[6px] w-[6px] rounded-full bg-sarj-violet" />
+                        {t.complaints.types[c.type]}
+                      </span>
+                      {miscategorised(c) && (
+                        <span
+                          title={`${t.complaints.picked}: ${t.complaints.types[c.pickedType]}`}
+                          className="whitespace-nowrap text-[10px] font-medium text-ink-faint-2"
+                        >
+                          {t.complaints.aiCorrected}
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td className="px-[16px] py-[13px] align-top">
                     <UrgencyChip u={c.urgency} />

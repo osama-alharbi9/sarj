@@ -362,6 +362,7 @@ export const STRINGS = {
       said: "In the caller's words",
       picked: "Caller selected",
       corrected: "Corrected by the assistant",
+      aiCorrected: "AI corrected",
       confidence: "Confidence",
       department: "Department",
       types: {
@@ -744,6 +745,7 @@ export const STRINGS = {
       said: "بكلام المتصل",
       picked: "اختاره المتصل",
       corrected: "صحّحه المساعد",
+      aiCorrected: "صحّحه الذكاء",
       confidence: "الثقة",
       department: "الجهة",
       types: {
