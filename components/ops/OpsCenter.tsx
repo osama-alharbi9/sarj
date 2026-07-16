@@ -106,67 +106,18 @@ export function OpsCenter() {
    assistant is actually performing. */
 
 function Dashboard({ onOpen }: { onOpen: (r: string) => void }) {
-  const { cases, takeOverLive, dispatch } = useCases();
+  const { cases, takeOverLive } = useCases();
   const t = useT();
   const { p, n } = useLocale();
   const age = useAge();
 
-  const emergencies = cases.filter((c) => c.status === "emergency");
+  // Emergencies are handled by the AI protocol before this screen — they are
+  // not a supervisor dispatch decision, so the dashboard does not surface them.
   const live = cases.filter((c) => c.status === "intake");
   const escalations = cases.filter((c) => c.escalation);
 
   return (
     <div className="flex flex-col gap-[16px]">
-      {/* Only rendered when it is true. An empty ops centre should look calm. */}
-      {emergencies.map((c) => (
-        <div
-          key={c.ref}
-          className="flex w-full items-center justify-between rounded-card-lg border-s-[4px] border-s-danger-text bg-danger-tint px-[18px] py-[15px]"
-        >
-          <div className="flex items-center gap-[12px]">
-            <span className="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-chip bg-danger-text">
-              <WarningTriangleIcon size={17} color="#fff" />
-            </span>
-            <div>
-              <div className="text-[14px] font-bold text-danger-text">{t.ops.emergencyBand}</div>
-              <div className="mt-[3px] flex items-center gap-2 text-[12px] text-ink-soft">
-                <Latin className="font-bold">{c.ref}</Latin>
-                <span>·</span>
-                <span>{c.emergency ? p(c.emergency.trigger) : ""}</span>
-                <span>·</span>
-                <span>{age(c.ageMin)}</span>
-                <span>·</span>
-                <span className="text-ink-muted">{t.ops.dispatchHint}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-none items-center gap-[10px]">
-            {/* Dispatch first. An injury is a dispatch problem before it is a case. */}
-            {c.dispatched ? (
-              <span className="inline-flex items-center gap-[6px] rounded-chip bg-white px-[14px] py-[9px] text-[13px] font-bold text-ok-text">
-                <CheckIcon size={12} color="#0F7A50" width={3} />
-                {t.ops.dispatched}
-              </span>
-            ) : (
-              <button
-                onClick={() => dispatch(c.ref)}
-                className="rounded-chip bg-danger-text px-[16px] py-[9px] text-[13px] font-bold text-white transition-opacity hover:opacity-90"
-              >
-                {t.ops.dispatch}
-              </button>
-            )}
-            <button
-              onClick={() => onOpen(c.ref)}
-              className="flex items-center gap-2 rounded-chip border border-[#EFC9C3] bg-white px-[14px] py-[9px] text-[13px] font-bold text-danger-text transition-colors hover:bg-[#FBE4E0]"
-            >
-              {t.ops.emergencyCta}
-              <ArrowRightIcon size={14} color="#C0392B" />
-            </button>
-          </div>
-        </div>
-      ))}
-
       <div className="grid grid-cols-[1fr_360px] gap-[16px]">
         <div className="flex flex-col gap-[16px]">
           {/* live intake — a widget, not a workflow */}
