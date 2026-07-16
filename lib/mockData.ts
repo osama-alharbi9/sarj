@@ -468,7 +468,9 @@ const CASE_04502: Case = {
     en: "Collision in a retail car park in Al Malqa. Each party insists he was stationary and that the other was the one moving. No injuries. No photographic evidence settles the direction of travel.",
     ar: "تصادم في موقف تجاري بحي الملقا. كل طرف يؤكد أنه كان متوقفًا وأن الآخر هو المتحرك. لا توجد إصابات. لا توجد أدلة مصوّرة تحسم اتجاه الحركة.",
   },
-  fieldsResolved: 8,
+  // 9/9: the file is complete. The escalation is about the difficulty of the
+  // liability decision, not missing information.
+  fieldsResolved: 9,
   fields: [
     { label: { en: "Party A — ID number", ar: "الطرف أ — رقم الهوية" }, value: "1043998217", latin: true, spaced: true },
     { label: { en: "Party A — plate", ar: "الطرف أ — اللوحة" }, value: "ط ي ق ٨٨٠٤", spaced: true },
@@ -477,6 +479,7 @@ const CASE_04502: Case = {
     { label: { en: "Location", ar: "الموقع" }, value: { en: "Al Malqa, Riyadh", ar: "حي الملقا، الرياض" } },
     { label: { en: "Injuries", ar: "الإصابات" }, value: { en: "None", ar: "لا يوجد" }, good: true },
     { label: { en: "Party A insurance", ar: "تأمين الطرف أ" }, value: { en: "Tawuniya — verified", ar: "التعاونية — مُتحقق" } },
+    { label: { en: "Party B insurance", ar: "تأمين الطرف ب" }, value: { en: "Malath — verified", ar: "ملاذ — مُتحقق" } },
     { label: { en: "Accident description", ar: "وصف الحادث" }, value: { en: "Collision in a car park", ar: "تصادم في موقف" } },
   ],
   evidence: [
