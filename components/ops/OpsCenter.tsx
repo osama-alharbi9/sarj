@@ -5,7 +5,6 @@ import { useCases } from "@/lib/caseStore";
 import {
   COMPLAINT_SLA_DAYS,
   INVESTIGATORS,
-  QUEUE_STAGES,
   SUPERVISOR_INITIALS,
   TOTAL_FIELDS,
   activeCountFor,
@@ -217,47 +216,6 @@ function Dashboard({ onOpen }: { onOpen: (r: string) => void }) {
         </div>
 
         <div className="flex flex-col gap-[16px]">
-          {/* bottlenecks, expressed as ages — not as counts */}
-          <Card title={t.ops.queueTitle} sub={t.ops.queueSub}>
-            <div className="flex flex-col gap-[10px]">
-              {QUEUE_STAGES.map((stage) => {
-                const meta = t.queueStages[stage as keyof typeof t.queueStages];
-                const inStage = cases.filter((c) => c.status === stage);
-                const oldest = inStage.reduce((m, c) => Math.max(m, c.ageMin), 0);
-                const hot = oldest >= 60;
-                return (
-                  <div
-                    key={stage}
-                    className={`rounded-card border p-[12px] ${
-                      hot ? "border-[#EFD9AE] bg-warn-tint" : "border-hair bg-[#F7FAF8]"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="text-[12px] font-bold text-ink">{meta.label}</span>
-                      <span
-                        className={`text-[18px] font-bold ${
-                          hot ? "text-warn-text" : "text-najm-green"
-                        }`}
-                      >
-                        {n(inStage.length)}
-                      </span>
-                    </div>
-                    <div className="mt-[3px] text-[11px] text-ink-muted">{meta.hint}</div>
-                    {inStage.length > 0 && (
-                      <div
-                        className={`mt-[7px] text-[11px] font-semibold ${
-                          hot ? "text-warn-text" : "text-ink-soft"
-                        }`}
-                      >
-                        {t.ops.oldest}: {age(oldest)}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-
           <Card title={t.ops.rosterTitle}>
             <RosterList cases={cases} compact />
           </Card>
