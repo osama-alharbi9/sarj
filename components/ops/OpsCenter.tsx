@@ -39,7 +39,6 @@ export function OpsCenter() {
 
   const nav = [
     { key: "dashboard", label: t.nav.dashboard },
-    { key: "investigators", label: t.nav.investigators },
     { key: "cases", label: t.nav.cases },
     { key: "complaints", label: t.nav.complaints },
   ];
@@ -88,8 +87,6 @@ export function OpsCenter() {
         <CaseView c={current} onBack={() => setOpenRef(null)} />
       ) : tab === "dashboard" ? (
         <Dashboard onOpen={setOpenRef} />
-      ) : tab === "investigators" ? (
-        <Roster onOpen={setOpenRef} />
       ) : tab === "cases" ? (
         <Ledger onOpen={setOpenRef} />
       ) : (
@@ -271,25 +268,9 @@ function Activity({ cases }: { cases: Case[] }) {
   );
 }
 
-/* ══ المحققون ═══════════════════════════════════════════════════════ */
-
-/**
- * Investigator load. Routine assignment is automatic — supervisors intervene
- * only through escalations and reassignments — so this seat is a monitoring
- * view of who is free and who is drowning, not a manual-assignment queue.
- */
-function Roster({ onOpen: _onOpen }: { onOpen: (r: string) => void }) {
-  const { cases } = useCases();
-  const t = useT();
-
-  return (
-    <div className="flex flex-col gap-[16px]">
-      <Card title={t.ops.rosterTitle}>
-        <RosterList cases={cases} />
-      </Card>
-    </div>
-  );
-}
+/* ══ Investigator load ══════════════════════════════════════════════
+   A monitoring view of who is free and who is drowning — read-only, because
+   routine assignment is automatic. Rendered inside the Dashboard's side rail. */
 
 function RosterList({ cases, compact }: { cases: Case[]; compact?: boolean }) {
   const t = useT();
